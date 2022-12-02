@@ -1,0 +1,32 @@
+"""Write a program that merges lines alternately from two files and
+writes the results to new file. If one file has less number of lines
+than the other, the remaining lines from the larger file should be
+simply copied into the target file."""
+
+# making first file with less number of lines
+lst = ['Coding in Python is fun\n', 'Python is easy to learn\n', 'Python is use in AI & data science etc\n']
+with open('file_1', 'w') as f:
+    f.writelines(lst)
+
+# making second file with greater number of lines
+lst = ['Talk is less, Show me the code\n', 'while(!(succeed=try()))\n', 'select*fromWorld Where\'Someone like %You%\n',
+       'While True I Love you\n']
+f = open('file_2', 'w')
+f.writelines(lst)
+f.close()
+
+# Merging two files
+f = open('Merge_file', 'w+')
+f1 = open('file_1', 'r')
+f2 = open('file_2', 'r')
+data_1 = f1.readline()
+data_2 = f2.readline()
+while True:
+    if data_1:
+        f.write(data_1)
+        data_1 = f1.readline()
+    if data_2:
+        f.write(data_2)
+        data_2 = f2.readline()
+    if data_1 == '' == data_2:
+        break
