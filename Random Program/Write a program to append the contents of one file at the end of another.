@@ -1,0 +1,36 @@
+import os
+
+# Program  to append the content of one file to the  end of other
+file_one = ['Python is very easy for new learner\n', 'C is hard to learn at first time\n',
+            'You may not be great when you '
+            'start, but you need to start '
+            'to be great\n']
+
+file_two = ['Work hard until you don\'t need an introduction.\n', 'Work so hard that one day your signature becomes an '
+                                                                  'autograph.\n']
+# creation first file
+f = open('file_1', 'w')
+f.writelines(file_one)
+f.close()
+# creation second file
+f = open('file_2', 'w')
+f.writelines(file_two)
+f.close()
+
+f = open('file_1', 'r')
+temp = ''
+# first way to read the data by line
+while True:
+    data = f.readline()
+    if data == "":
+        break
+    temp += data
+
+f = open('file_2', 'r')
+# second way to read the data by line
+for data in f:
+    temp += data
+f.close()
+f = open('file_1','w')
+f.write(temp)
+f.close()
