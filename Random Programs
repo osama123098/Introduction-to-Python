@@ -1,2 +1,37 @@
 Hello new programmer welcome to my learning platform, 
 we are going to learn many random program to make goods enough to code like a pro
+
+
+import os, time
+
+"""Program to find the file in current location and print the size, creation time, modification time, and accessed 
+time """
+
+
+def file(file_path):
+    """Function to find the file in current path"""
+    if os.path.isfile(file_path):
+        print('Your File is exists')
+        file_info = os.stat(file_path)
+        print('Size: ', convert(file_info.st_size))
+        print('Date created: ' + time.ctime(file_info.st_ctime))
+        print('Date modified: ' + time.ctime(file_info.st_mtime))
+        print('Date accessed: ' + time.ctime(file_info.st_atime))
+
+        return
+    else:
+        print('Your file does\'t exit on current location: ', file_path)
+
+
+def convert(size):
+    """ Function to convert the appropriate size in bytes/KB/MB/GB/TB """
+    for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+        if size < 1024:  # if the unit is less than return the appropriate unit
+            return '%3.1f%s' % (size, x)
+        size /= 1024  # to get the unit
+
+
+folder_path = input('Please give the folder path to find the file: ')
+file_name = input('Please give the file name: ')
+path = os.path.join(folder_path, file_name)
+file(path)
