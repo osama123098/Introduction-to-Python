@@ -3,8 +3,8 @@ f = open('ourfile','rb') #open the file
 count  = 1 # to count the line number
 
 while True:
-    r = f.readline()
-    if r == '':
+    data = f.readline()
+    if data == '':
         break
     print(count,end= ' ')
     count+=1
