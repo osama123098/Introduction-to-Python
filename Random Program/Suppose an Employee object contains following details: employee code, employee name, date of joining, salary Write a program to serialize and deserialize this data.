@@ -1,0 +1,46 @@
+"""Suppose an Employee object contains following details:
+employee code, employee name, date of joining, salary
+Write a program to serialize and deserialize this data."""
+import json
+
+
+# defining a custom function for serialization the data
+def encode_employee(x):
+    if isinstance(x, Employee):
+        return x.encoding()
+    else:
+        raise TypeError('Object is not JSON serializable')
+
+
+def decode_employee(dct):
+    if '__Employee__' in dct:
+        return Employee(dct['Employee_ID'], dct['Name'], dct['Date of Joining'], dct['Salary'])
+    return dct
+
+
+# making class of employee
+class Employee:
+    def __init__(self, _id, name, date_join, salary):
+        self.__employee_id = _id
+        self.__name = name
+        self.__date_joining = date_join
+        self.__salary = salary
+
+    def display(self):
+        print(f'Employee ID: {self.__employee_id}\tname:{self.__name}')
+        print(f'date of joining: {self.__date_joining}\tsalary{self.__salary}')
+
+    def encoding(self):
+        return {
+            'Employee_ID': self.__name,
+            'Name': self.__name.title(),
+            'Date of Joining': self.__date_joining,
+            'Salary': self.__salary
+        }
+
+
+new_obj = Employee(101, 'Osama', '12 Jun 2022', 25000)
+with open('Employee', 'w+') as f:
+    json.dump(new_obj, f, default=encode_employee)
+    f.seek(0)
+    print(json.load(f, object_hook=decode_employee))
