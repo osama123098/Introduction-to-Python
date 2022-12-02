@@ -1,0 +1,33 @@
+"""Suppose a file contains student’s records with each record
+containing name and age of a student. Write a program to read
+these records and display them in sorted order by name."""
+import json
+
+dic = {
+    '101-A': {'name': 'Osama', 'age': '23'},
+    '102-A': {'name': 'Bilal', 'age': '15'},
+    '103-A': {'name': 'Arsalan', 'age': '20'},
+    '101-B': {'name': 'Zain', 'age': '25'},
+    '102-B': {'name': 'Rasib', 'age': '28'},
+    '103-B': {'name': 'Faizan', 'age': '21'}
+}
+
+# write the data on file
+f = open('file', 'w')
+json.dump(dic, f)
+f.close()
+
+# Read the data from file
+f = open('file', 'r')
+data = json.load(f)
+f.close()
+
+# Printing the data sort by name
+for ele in data.items():
+    print(ele)
+print()
+print()
+# sorted the dictionary by using sorted function and get tuple of name and age in the inner dictionary by map function
+new = map(lambda ele: (ele['name'], ele['age']), sorted(data.values(), key=lambda d: d['name']))
+for k in new:
+    print(k[0], k[1])
