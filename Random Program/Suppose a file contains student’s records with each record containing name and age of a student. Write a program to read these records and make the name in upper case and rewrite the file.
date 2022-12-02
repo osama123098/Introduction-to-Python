@@ -1,0 +1,43 @@
+"""Suppose a file contains student’s records with each record
+containing name and age of a student. Write a program to read
+these records and make the name in upper case and rewrite the file."""
+import json
+
+
+def fun(key, lst):
+    # here we get the list of inner dictionary and key
+    for i in lst:
+        # make the name in dictionary in upper case
+        i['name'] = i['name'].upper()
+        # return a dictionary by using zip function
+    return {k: v for k, v in zip(key, lst)}
+
+
+dic = {
+    '101-A': {'name': 'Osama', 'age': '23'},
+    '102-A': {'name': 'Bilal', 'age': '15'},
+    '103-A': {'name': 'Arsalan', 'age': '20'},
+    '101-B': {'name': 'Zain', 'age': '25'},
+    '102-B': {'name': 'Rasib', 'age': '28'},
+    '103-B': {'name': 'Faizan', 'age': '21'}
+}
+
+# write the data on file
+f = open('file', 'w')
+json.dump(dic, f)
+f.close()
+
+# Read the data from file
+f = open('file', 'r')
+data = json.load(f)
+f.close()
+
+# sorted the dictionary by using sorted function and get tuple of name and age in the inner dictionary by map function
+new = sorted(data.values(), key=lambda d: d['name'])
+tem = fun(data.keys(), new)
+
+# Rewriting the data on file
+# write the data on file
+f = open('file', 'w')
+json.dump(tem, f)
+f.close()
