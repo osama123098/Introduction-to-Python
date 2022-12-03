@@ -1,0 +1,32 @@
+"""Given a text file, write a program to create another text file deleting
+the words “a”, “the”, “an” and replacing each one of them with a
+blank space."""
+f1 = open('file','w')
+
+# one way
+with open('file_1','r') as f:
+    while True:
+        data = f.readline()
+        if data == '':
+            break
+        temp = []
+        for ele in data.split():
+            if ele in ('a','an','the'):
+                pass
+            else:
+                temp.append(ele)
+        f1.write(' '.join(temp))
+        f1.write('\n')
+
+
+# another way
+
+f = open('file_1','r')
+data = f.read()
+f.close()
+data = data.replace('a','')
+data = data.replace('an','')
+data = data.replace('the','')
+f1 = open('file','w')
+f1.write(data)
+f1.close()
