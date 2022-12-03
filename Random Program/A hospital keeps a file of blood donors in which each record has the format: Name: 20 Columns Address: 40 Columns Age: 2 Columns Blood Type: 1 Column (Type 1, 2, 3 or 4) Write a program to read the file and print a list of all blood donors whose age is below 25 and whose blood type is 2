@@ -1,0 +1,39 @@
+""""A hospital keeps a file of blood donors in which each record has the
+format:
+Name: 20 Columns
+Address: 40 Columns
+Age: 2 Columns
+Blood Type: 1 Column (Type 1, 2, 3 or 4)
+Write a program to read the file and print a list of all blood donors
+whose age is below 25 and whose blood type is 2."""
+
+# formatting data
+
+dic = {
+    'osama': ['Karachi', 23, 1],
+    'Khadija': ['Karachi', 25, 2],
+    'hamza': ['punjab', 19, 4],
+    'bilal': ['sakkar', 27, 3],
+    'alizy': ['Karachi', 23, 2],
+    'ilyas': ['Karachi', 25, 3],
+    'Munno': ['Karachi', 23, 1]
+}
+# writing the data on file
+temp = 'Name' + ' ' * 16 + 'Address' + ' ' * 13 + 'Age' + ' ' * 2 + 'Blood Type''\n'
+f = open('Blood group', 'w+')
+f.write(temp)
+for k, v in dic.items():
+    temp = '{0:20s}{1:20s}{2:5s}{3:1s}\n'.format(k, v[0], str(v[1]), str(v[2]))  # format of data in file
+    f.write(temp)
+f.seek(0)
+print(f.readline(),end='')
+while True:
+    data = f.readline()
+    if data == '':
+        break
+    name = data[:20]
+    address = data[20:40]
+    age = int(data[40:45])
+    blood = int(data[45:])
+    if age > 20 and blood == 2:
+        print(data ,end = '')
