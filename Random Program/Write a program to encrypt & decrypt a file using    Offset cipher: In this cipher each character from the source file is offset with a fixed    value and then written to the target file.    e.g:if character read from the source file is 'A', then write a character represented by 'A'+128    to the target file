@@ -1,0 +1,64 @@
+"""Write a program to encrypt & decrypt a file using
+   Offset cipher: In this cipher each character from the source file is offset with a fixed
+   value and then written to the target file.
+   e.g:if character read from the source file is 'A', then write a character represented by 'A'+128
+   to the target file"""
+
+import os
+
+
+# offset cipher
+def encrytion(f1, f2):
+    """Encryption by increment 128"""
+    data = f1.read()
+    for ele in data:
+        f2.write(chr(ord(ele) + 128))
+
+
+def decryption(f1, f2):
+    data = f1.read()
+    for ele in data:
+        f2.write(chr(ord(ele) - 128))
+
+
+print("Encryption Algorithm")
+# For again taking write input
+while True:
+    try:
+        # raising the error
+        ch = input("Encrypt or Decrypt (E/D)")
+        # For encryption
+        if ch == "E":
+            path = input("Please Give the path of file you want to offset cipher")
+            name = input("Please give the name of file to encrypted file")
+            # checking the exists or not
+            if os.path.isfile(path):
+                f = open(path, 'r')
+                f_1 = open(name, 'w')
+                # for encoding in utf-8
+                # f = (open(path,'r',encoding = 'utf-8))
+                encrytion(f, f_1)
+                f.close()
+                f_1.close()
+                exit()
+            else:
+                print("Your file does not exist")
+        # For Decryption
+        elif ch == "D":
+            path = input("Please Give the path of file you want to decrypt cipher")
+            name = input("Please give the name of file you want to create plain text")
+            # checking the exists or not
+            if os.path.isfile(path):
+                f = open(path, 'r')
+                f_1 = open(name, 'w')
+                decryption(f, f_1)
+                f.close()
+                f_1.close()
+                exit()
+            else:
+                print("Your file does not exist")
+        else:
+            raise ValueError("You give the wrong input")
+
+    except ValueError as ie:
+        print(ie.args)
