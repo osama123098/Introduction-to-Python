@@ -1,0 +1,77 @@
+"""Assume that a Master file contains two fields, roll number and
+name of the student. At the end of the year, a set of students join
+the class and another set leaves. A Transaction file contains the roll
+numbers and an appropriate code to add or delete a student.
+Write a program to create another file that contains the updated
+list of names and roll numbers. Assume that the Master file and the
+Transaction file are arranged in ascending order by roll numbers.
+The updated file should also be in ascending order by roll numbers."""
+import json
+
+# Creating a master file
+dic = {
+    '101-A': 'osama',
+    '102-A': 'mubashir',
+    '103-A': 'bilal',
+    '104-A': 'basit',
+    '105-A': 'ali',
+    '106-A': 'faizan',
+    '107-A': 'arsalan',
+    '108-A': 'jaleel',
+    '109-A': 'adris',
+    '110-A': 'noman'
+}
+with open('master_file', 'w') as f:
+    json.dump(dic, f)
+
+# Creating Transaction file with appropriate code
+dic_1 = [
+    {'111-A': 'Ausi', 'code': 'A'},
+    {'107-A': 'Shams', 'code': 'A'},
+    {'119-A': 'Muneer', 'code': 'A'},
+    {'160-A': 'Naila', 'code': 'A'},
+    {'210-A': 'Laiba', 'code': 'A'},
+    {'103-A': 'bilal', 'code': 'D'},
+    {'110-A': 'noman', 'code': 'D'},
+    {'109-A': 'adris', 'code': 'D'},
+    {'106-A': 'faizan', 'code': 'D'},
+    {'108-A': 'jaleel', 'code': 'D'},
+    {'150-A': 'niyaz', 'code': 'A'}
+]
+
+f = open('Transaction', 'w')
+json.dump(dic_1, f)
+f.close()
+
+# loading  the data by json
+f_master = open('master_file', 'r')
+data_master = json.load(f_master)
+f_master.close()
+f_trans = open('Transaction', 'r')
+data_trans = json.load(f_trans)
+f_trans.close()
+# printing the master element
+print('The Master file')
+for ele in data_master.items():
+    print(ele)
+
+# Printing the Transaction data
+print('The Transaction file contain the data with code adding and delete the entity')
+for ele in data_trans:
+    print(*ele.items())
+
+# Creating the data
+for ele in data_trans:
+    temp = ele['code']
+    if ele['code'] == 'A':
+        new = next(iter(ele))
+        data_master[new] = ele[new]
+    else:
+        new = next(iter(ele))
+        del (data_master[new])
+
+# making the new file with sorted data
+f_new = open('new_file', 'w')
+new = {ele[0]: ele[1] for ele in sorted(data_master.items(), key=lambda t: t[0])}
+json.dump(new, f_new)
+
