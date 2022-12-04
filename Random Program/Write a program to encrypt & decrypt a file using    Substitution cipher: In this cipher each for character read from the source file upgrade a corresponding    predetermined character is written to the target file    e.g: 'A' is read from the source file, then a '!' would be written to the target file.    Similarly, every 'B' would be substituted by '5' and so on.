@@ -1,0 +1,77 @@
+"""Write a program to encrypt & decrypt a file using
+   Substitution cipher: In this cipher each for character read from the source file upgrade a corresponding
+   predetermined character is written to the target file
+   e.g: 'A' is read from the source file, then a '!' would be written to the target file.
+   Similarly, every 'B' would be substituted by '5' and so on."""
+
+import os
+
+
+# offset cipher
+def encrytion(f1, f2):
+    """Encryption by Substitution cipher"""
+    s1 = r'`1234567890-=+_)(*&^%$#@!~qwertyuiop[]\|][poiuytrewqASDFGHJKL:":LKJHGFDSAZXCVBNM<>?/.,mnbvcxz'
+    s2 = r'asdfghjkl;":LKJHGFDSA=-0987654321`~!@#$%^&*()_+/.,mnbvcxzZXCVBNM<>?\][poiuytrewqQWERTYUIOP{}|'
+    data = f1.read()
+    for ele in data:
+        pos = s1.find(ele)
+        if pos == -1:
+            f2.write(ele)
+        else:
+            f2.write(s2[pos])
+
+
+def decryption(f1, f2):
+    """Decrytion by substitution cipher"""
+    s1 = r'`1234567890-=+_)(*&^%$#@!~qwertyuiop[]\|][poiuytrewqASDFGHJKL:":LKJHGFDSAZXCVBNM<>?/.,mnbvcxz'
+    s2 = r'asdfghjkl;":LKJHGFDSA=-0987654321`~!@#$%^&*()_+/.,mnbvcxzZXCVBNM<>?\][poiuytrewqQWERTYUIOP{}|'
+    data = f1.read()
+    for ele in data:
+        pos = s2.find(ele)
+        if pos == -1:
+            f2.write(ele)
+        else:
+            f2.write(s1[pos])
+
+
+print("Encryption Algorithm")
+# For again taking write input
+while True:
+    try:
+        # raising the error
+        ch = input("Encrypt or Decrypt (E/D) ")
+        # For encryption
+        if ch == "E":
+            path = input("Please Give the path of file you want to offset cipher: ")
+            name = input("Please give the name of file to encrypted file: ")
+            # checking the exists or not
+            if os.path.isfile(path):
+                f = open(path, 'r')
+                f_1 = open(name, 'w')
+                # for encoding in utf-8
+                # f = (open(path,'r',encoding = 'utf-8))
+                encrytion(f, f_1)
+                f.close()
+                f_1.close()
+                exit()
+            else:
+                print("Your file does not exist")
+        # For Decryption
+        elif ch == "D":
+            path = input("Please Give the path of file you want to decrypt cipher")
+            name = input("Please give the name of file you want to create plain text")
+            # checking the exists or not
+            if os.path.isfile(path):
+                f = open(path, 'r')
+                f_1 = open(name, 'w')
+                decryption(f, f_1)
+                f.close()
+                f_1.close()
+                exit()
+            else:
+                print("Your file does not exist")
+        else:
+            raise ValueError("You give the wrong input")
+
+    except ValueError as ie:
+        print(ie.args)
